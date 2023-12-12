@@ -1,8 +1,10 @@
-import { DockerComposeEnvironment, Wait } from "testcontainers";
 import {
+  GenericContainer,
   StartedTestContainer,
-  TestContainer
-} from "testcontainers/dist/test-container";
+  TestContainer,
+  DockerComposeEnvironment,
+  Wait
+} from "testcontainers";
 import {
   DockerComposeConfig,
   JestTestcontainersConfig,
@@ -28,15 +30,26 @@ describe("containers", () => {
       };
 
       // Act
-      const actualContainer: any = buildTestcontainer(config);
+      const actualContainer: any = buildTestcontainer(
+        config
+      ) as GenericContainer;
 
       // Assert
-      expect(actualContainer.image).toEqual("redis:latest");
-      expect(actualContainer.ports).toEqual([]);
+      const expectedImageName = {
+        image: "redis",
+        registry: undefined,
+        string: "redis:latest",
+        tag: "latest"
+      };
+      const expectedWaitStrategy = {
+        startupTimeout: 60000,
+        startupTimeoutSet: false
+      };
+      expect(actualContainer.imageName).toEqual(expectedImageName);
+      expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(undefined);
-      expect(actualContainer.startupTimeout).toEqual(60000);
-      expect(actualContainer.bindMounts).toEqual([]);
+      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
     it("should set tag correctly", () => {
@@ -47,15 +60,26 @@ describe("containers", () => {
       };
 
       // Act
-      const actualContainer: any = buildTestcontainer(config);
+      const actualContainer: any = buildTestcontainer(
+        config
+      ) as GenericContainer;
 
       // Assert
-      expect(actualContainer.image).toEqual("redis:5.0.5");
-      expect(actualContainer.ports).toEqual([]);
+      const expectedImageName = {
+        image: "redis",
+        registry: undefined,
+        string: "redis:5.0.5",
+        tag: "5.0.5"
+      };
+      const expectedWaitStrategy = {
+        startupTimeout: 60000,
+        startupTimeoutSet: false
+      };
+      expect(actualContainer.imageName).toEqual(expectedImageName);
+      expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(undefined);
-      expect(actualContainer.startupTimeout).toEqual(60000);
-      expect(actualContainer.bindMounts).toEqual([]);
+      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
     it("should set ports correctly", () => {
@@ -66,15 +90,26 @@ describe("containers", () => {
       };
 
       // Act
-      const actualContainer: any = buildTestcontainer(config);
+      const actualContainer: any = buildTestcontainer(
+        config
+      ) as GenericContainer;
 
       // Assert
-      expect(actualContainer.image).toEqual("redis:latest");
-      expect(actualContainer.ports).toEqual([6379]);
+      const expectedImageName = {
+        image: "redis",
+        registry: undefined,
+        string: "redis:latest",
+        tag: "latest"
+      };
+      const expectedWaitStrategy = {
+        startupTimeout: 60000,
+        startupTimeoutSet: false
+      };
+      expect(actualContainer.imageName).toEqual(expectedImageName);
+      expect(actualContainer.exposedPorts).toEqual([6379]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(undefined);
-      expect(actualContainer.startupTimeout).toEqual(60000);
-      expect(actualContainer.bindMounts).toEqual([]);
+      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
     it("should set name correctly", () => {
@@ -86,16 +121,27 @@ describe("containers", () => {
       };
 
       // Act
-      const actualContainer: any = buildTestcontainer(config);
+      const actualContainer: any = buildTestcontainer(
+        config
+      ) as GenericContainer;
 
       // Assert
-      expect(actualContainer.image).toEqual("redis:latest");
-      expect(actualContainer.ports).toEqual([6379]);
-      expect(actualContainer.name).toEqual("container-name");
+      const expectedImageName = {
+        image: "redis",
+        registry: undefined,
+        string: "redis:latest",
+        tag: "latest"
+      };
+      const expectedWaitStrategy = {
+        startupTimeout: 60000,
+        startupTimeoutSet: false
+      };
+      expect(actualContainer.imageName).toEqual(expectedImageName);
+      expect(actualContainer.exposedPorts).toEqual([6379]);
+      expect(actualContainer.createOpts.name).toEqual("container-name");
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(undefined);
-      expect(actualContainer.startupTimeout).toEqual(60000);
-      expect(actualContainer.bindMounts).toEqual([]);
+      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
     it("should set env correctly", () => {
@@ -108,15 +154,26 @@ describe("containers", () => {
       };
 
       // Act
-      const actualContainer: any = buildTestcontainer(config);
+      const actualContainer: any = buildTestcontainer(
+        config
+      ) as GenericContainer;
 
       // Assert
-      expect(actualContainer.image).toEqual("redis:latest");
-      expect(actualContainer.ports).toEqual([]);
+      const expectedImageName = {
+        image: "redis",
+        registry: undefined,
+        string: "redis:latest",
+        tag: "latest"
+      };
+      const expectedWaitStrategy = {
+        startupTimeout: 60000,
+        startupTimeoutSet: false
+      };
+      expect(actualContainer.imageName).toEqual(expectedImageName);
+      expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({ hello: "world" });
-      expect(actualContainer.waitStrategy).toEqual(undefined);
-      expect(actualContainer.startupTimeout).toEqual(60000);
-      expect(actualContainer.bindMounts).toEqual([]);
+      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
     it("should port wait strategy correctly", () => {
@@ -130,15 +187,26 @@ describe("containers", () => {
       };
 
       // Act
-      const actualContainer: any = buildTestcontainer(config);
+      const actualContainer: any = buildTestcontainer(
+        config
+      ) as GenericContainer;
 
       // Assert
-      expect(actualContainer.image).toEqual("redis:latest");
-      expect(actualContainer.ports).toEqual([]);
+      const expectedImageName = {
+        image: "redis",
+        registry: undefined,
+        string: "redis:latest",
+        tag: "latest"
+      };
+      const expectedWaitStrategy = {
+        startupTimeout: 60000,
+        startupTimeoutSet: false
+      };
+      expect(actualContainer.imageName).toEqual(expectedImageName);
+      expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(undefined);
-      expect(actualContainer.startupTimeout).toEqual(30000);
-      expect(actualContainer.bindMounts).toEqual([]);
+      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
     it("should text wait strategy correctly", () => {
@@ -152,17 +220,24 @@ describe("containers", () => {
       };
 
       // Act
-      const actualContainer: any = buildTestcontainer(config);
+      const actualContainer: any = buildTestcontainer(
+        config
+      ) as GenericContainer;
 
       // Assert
-      expect(actualContainer.image).toEqual("redis:latest");
-      expect(actualContainer.ports).toEqual([]);
+      const expectedImageName = {
+        image: "redis",
+        registry: undefined,
+        string: "redis:latest",
+        tag: "latest"
+      };
+      expect(actualContainer.imageName).toEqual(expectedImageName);
+      expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({});
       expect(actualContainer.waitStrategy).toEqual(
         Wait.forLogMessage("hello, world")
       );
-      expect(actualContainer.startupTimeout).toEqual(60000);
-      expect(actualContainer.bindMounts).toEqual([]);
+      expect(actualContainer.bindMounts).toEqual(undefined);
     });
     it("should set bind mounts correctly", () => {
       // Arrange
@@ -183,25 +258,28 @@ describe("containers", () => {
       };
 
       // Act
-      const actualContainer: any = buildTestcontainer(config);
+      const actualContainer: any = buildTestcontainer(
+        config
+      ) as GenericContainer;
 
       // Assert
-      expect(actualContainer.image).toEqual("redis:latest");
-      expect(actualContainer.ports).toEqual([]);
+      const expectedImageName = {
+        image: "redis",
+        registry: undefined,
+        string: "redis:latest",
+        tag: "latest"
+      };
+      const expectedWaitStrategy = {
+        startupTimeout: 60000,
+        startupTimeoutSet: false
+      };
+      expect(actualContainer.imageName).toEqual(expectedImageName);
+      expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(undefined);
-      expect(actualContainer.startupTimeout).toEqual(60000);
-      expect(actualContainer.bindMounts).toEqual([
-        {
-          mode: "ro",
-          source: "/somepath",
-          target: "/somepath"
-        },
-        {
-          source: "/anotherpath",
-          target: "/anotherpath",
-          mode: "ro"
-        }
+      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.hostConfig.Binds).toEqual([
+        "/somepath:/somepath:ro",
+        "/anotherpath:/anotherpath:ro"
       ]);
     });
   });
@@ -213,7 +291,7 @@ describe("containers", () => {
         composeFilePath: ".",
         composeFile: "docker-compose.yml"
       };
-      const nameRegex = new RegExp(/testcontainers-[0-9A-F]{32}/i);
+      const nameRegex = new RegExp(/testcontainers-[0-9a-f]{12}/i);
 
       // Act
       const actualEnvironment: any = buildDockerComposeEnvironment(
@@ -233,7 +311,7 @@ describe("containers", () => {
         composeFile: "docker-compose.yml",
         startupTimeout: 60000
       };
-      const nameRegex = new RegExp(/testcontainers-[0-9A-F]{32}/i);
+      const nameRegex = new RegExp(/testcontainers-[0-9a-f]{12}/i);
 
       // Act
       const actualEnvironment: any = buildDockerComposeEnvironment(

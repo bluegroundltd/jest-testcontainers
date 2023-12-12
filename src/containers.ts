@@ -1,12 +1,10 @@
 import {
   DockerComposeEnvironment,
   GenericContainer,
+  StartedTestContainer,
+  TestContainer,
   Wait
 } from "testcontainers";
-import {
-  StartedTestContainer,
-  TestContainer
-} from "testcontainers/dist/test-container";
 import {
   DockerComposeConfig,
   EnvironmentVariableMap,
