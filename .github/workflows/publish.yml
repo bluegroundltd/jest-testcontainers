@@ -1,4 +1,4 @@
-name: Test Jest-Containers
+name: Publish - Jest-Containers
 on:
   push:
     branches:
