@@ -1,9 +1,9 @@
 import {
+  DockerComposeEnvironment,
   GenericContainer,
   StartedTestContainer,
   TestContainer,
-  DockerComposeEnvironment,
-  Wait
+  Wait,
 } from "testcontainers";
 import {
   DockerComposeConfig,
@@ -41,14 +41,13 @@ describe("containers", () => {
         string: "redis:latest",
         tag: "latest"
       };
-      const expectedWaitStrategy = {
-        startupTimeout: 60000,
-        startupTimeoutSet: false
-      };
       expect(actualContainer.imageName).toEqual(expectedImageName);
       expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.waitStrategy.constructor.name).toEqual(
+        "HostPortWaitStrategy"
+      );
+      expect(actualContainer.waitStrategy.startupTimeoutMs).toBe(60000);
       expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
@@ -71,14 +70,13 @@ describe("containers", () => {
         string: "redis:5.0.5",
         tag: "5.0.5"
       };
-      const expectedWaitStrategy = {
-        startupTimeout: 60000,
-        startupTimeoutSet: false
-      };
       expect(actualContainer.imageName).toEqual(expectedImageName);
       expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.waitStrategy.constructor.name).toEqual(
+        "HostPortWaitStrategy"
+      );
+      expect(actualContainer.waitStrategy.startupTimeoutMs).toBe(60000);
       expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
@@ -101,14 +99,13 @@ describe("containers", () => {
         string: "redis:latest",
         tag: "latest"
       };
-      const expectedWaitStrategy = {
-        startupTimeout: 60000,
-        startupTimeoutSet: false
-      };
       expect(actualContainer.imageName).toEqual(expectedImageName);
       expect(actualContainer.exposedPorts).toEqual([6379]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.waitStrategy.constructor.name).toEqual(
+        "HostPortWaitStrategy"
+      );
+      expect(actualContainer.waitStrategy.startupTimeoutMs).toBe(60000);
       expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
@@ -132,15 +129,14 @@ describe("containers", () => {
         string: "redis:latest",
         tag: "latest"
       };
-      const expectedWaitStrategy = {
-        startupTimeout: 60000,
-        startupTimeoutSet: false
-      };
       expect(actualContainer.imageName).toEqual(expectedImageName);
       expect(actualContainer.exposedPorts).toEqual([6379]);
       expect(actualContainer.createOpts.name).toEqual("container-name");
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.waitStrategy.constructor.name).toEqual(
+        "HostPortWaitStrategy"
+      );
+      expect(actualContainer.waitStrategy.startupTimeoutMs).toBe(60000);
       expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
@@ -165,14 +161,13 @@ describe("containers", () => {
         string: "redis:latest",
         tag: "latest"
       };
-      const expectedWaitStrategy = {
-        startupTimeout: 60000,
-        startupTimeoutSet: false
-      };
       expect(actualContainer.imageName).toEqual(expectedImageName);
       expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({ hello: "world" });
-      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.waitStrategy.constructor.name).toEqual(
+        "HostPortWaitStrategy"
+      );
+      expect(actualContainer.waitStrategy.startupTimeoutMs).toBe(60000);
       expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
@@ -198,14 +193,13 @@ describe("containers", () => {
         string: "redis:latest",
         tag: "latest"
       };
-      const expectedWaitStrategy = {
-        startupTimeout: 60000,
-        startupTimeoutSet: false
-      };
       expect(actualContainer.imageName).toEqual(expectedImageName);
       expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.waitStrategy.constructor.name).toEqual(
+        "HostPortWaitStrategy"
+      );
+      expect(actualContainer.waitStrategy.startupTimeoutMs).toBe(60000);
       expect(actualContainer.bindMounts).toEqual(undefined);
     });
 
@@ -270,13 +264,16 @@ describe("containers", () => {
         tag: "latest"
       };
       const expectedWaitStrategy = {
-        startupTimeout: 60000,
+        startupTimeoutMs: 60000,
         startupTimeoutSet: false
       };
       expect(actualContainer.imageName).toEqual(expectedImageName);
       expect(actualContainer.exposedPorts).toEqual([]);
       expect(actualContainer.environment).toEqual({});
-      expect(actualContainer.waitStrategy).toEqual(expectedWaitStrategy);
+      expect(actualContainer.waitStrategy.constructor.name).toEqual(
+        "HostPortWaitStrategy"
+      );
+      expect(actualContainer.waitStrategy.startupTimeoutMs).toBe(60000);
       expect(actualContainer.hostConfig.Binds).toEqual([
         "/somepath:/somepath:ro",
         "/anotherpath:/anotherpath:ro"
@@ -319,7 +316,7 @@ describe("containers", () => {
       );
 
       // Assert
-      expect(actualEnvironment.startupTimeout).toEqual(60000);
+      expect(actualEnvironment.startupTimeoutMs).toEqual(60000);
     });
   });
 
